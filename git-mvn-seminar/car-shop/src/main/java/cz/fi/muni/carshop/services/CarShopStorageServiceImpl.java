@@ -33,4 +33,14 @@ public class CarShopStorageServiceImpl implements CarShopStorageService {
 		CarShopStorage.getInstancce().getCars().computeIfAbsent(car.getType(), x -> new ArrayList<>()).add(car);
 	}
 
+    @Override
+    public void sellCar(Car car) throws RequestedCarNotFoundException {
+		Map<CarTypes, List<Car>> allCars = CarShopStorage.getInstancce().getCars();
+        List<Car> carsOfSameType = allCars.get(referenceCar.getType());
+        if (!carsOfSameType.contains(car)) {
+            throw new RequestedCarNotFoundException();
+        }
+        carsOfSameType.remove(car);
+    }
+
 }
